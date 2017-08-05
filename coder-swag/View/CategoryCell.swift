@@ -12,6 +12,11 @@ class CategoryCell: UITableViewCell {
     
     @IBOutlet weak var categoryImage: UIImageView!
     @IBOutlet weak var categoryTitle: UILabel!
+    
+    func updateViews(category: Category) {
+        categoryImage.image = UIImage(named: category.imageName)
+        categoryTitle.text = category.title
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,5 +28,4 @@ class CategoryCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }
