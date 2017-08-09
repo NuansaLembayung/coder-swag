@@ -12,13 +12,18 @@ class ProductVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     @IBOutlet weak var ProductCollection: UICollectionView!
     
-    var productSeries:[Product]!
+    private(set) public var products:[Product] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         ProductCollection.delegate = self
         ProductCollection.dataSource = self
+    }
+    
+    func initProducts(selectedCategory: Category) {
+        products = DataService.instance.getProducts(forCategoryTitle: selectedCategory.title)
+        navigationItem.title = selectedCategory.title
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,12 +32,12 @@ class ProductVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return productSeries.count
+        return products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCell", for: indexPath) as? ProductCell {
-            let productCell = productSeries[indexPath.row]
+            let productCell = products[indexPath.row]
             cell.updateViews(product: productCell)
             return cell
         } else {

@@ -20,6 +20,6 @@ class ProductCell: UICollectionViewCell {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = .current
-        productPrice.text = "\(formatter.currencySymbol!)\(product.productPrice!)"
+        productPrice.text = "\(formatter.currencySymbol!) \(product.productPrice!)"
     }
 }
