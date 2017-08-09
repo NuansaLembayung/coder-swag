@@ -10,6 +10,8 @@ import UIKit
 
 class CategoryVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var productSeries: [Product] = []
+    
     @IBOutlet weak var categoryTable: UITableView!
 
     override func viewDidLoad() {
@@ -37,6 +39,21 @@ class CategoryVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             return CategoryCell()
         }
     }
-
+    
+    func selectedProduct(selectedCategory: Category) -> [Product] {
+        return DataService.instance.getProducts(forCategoryTitle: selectedCategory.title)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let category = DataService.instance.getCategories()[indexPath.row]
+        productSeries = selectedProduct(selectedCategory: category)
+        performSegue(withIdentifier: "ProductVCSegue", sender: category)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let productVC = segue.destination as? ProductVC {
+            productVC.productSeries = productSeries
+        }
+    }
 }
 
